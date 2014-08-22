@@ -1,0 +1,70 @@
+<% if notice %>
+<p id="notice" class="alert alert-info"><%= notice %></p>
+<% end %>
+
+<p>
+  <strong>Title:</strong>
+  <%= @entry.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @entry.body %>
+</p>
+
+<%= link_to 'Edit', edit_blog_entry_path(@blog.id, @entry.id) %> |
+<%= link_to 'Back', blog_path(@blog) %>
+
+<hr>
+
+<h1>Listing comments</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Body</th>
+      <th></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <% if comment.status == 'approved' %>
+        <td><%= comment.body %></td>
+        <td></td>
+        <% else %>
+        <td>（承認待ち）</td>
+        <td><%= link_to 'Approve', approve_comment_path(comment.id), data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+        
+        <td><%= link_to 'Destroy', [@entry, comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>New comment</h1>
+<%= form_for([@entry, @comment]) do |f| %>
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% @comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :body %><br>
+    <%= f.text_area :body, class: 'form-control' %>
+    <%= f.hidden_field :entry_id, value: @entry.id %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'save', class: 'btn btn-default active' %>
+  </div>
+<% end %>
