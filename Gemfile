@@ -54,3 +54,8 @@ group :development, :test do
 end
 
 gem "better_errors",        group: :development
+
+group :test do
+  gem 'factory_girl_rails'
+	gem 'faker'
+end
