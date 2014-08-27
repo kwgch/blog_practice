@@ -1,0 +1,15 @@
+<h1>新しいコメントが登録されました。</h1>
+<p>
+承認または削除してください。
+<p>
+Blog: <%= @blog.title %>
+</p>
+<p>
+Entry: <%= @entry.title %>
+</p>
+<p>
+Comment: <%= @comment.body %>
+</p>
+<p>
+  URL: <%= url_for(controller: 'entries', action: 'show', blog_id: @blog.id, id: @entry.id, only_path: false) %>
+</p>

@@ -4,16 +4,27 @@ class CommentsController < ApplicationController
   def create
     @entry = Entry.find(params[:entry_id])
     @comment = Comment.new(comment_params)
+    @blog = Blog.find(@entry.blog_id)
     
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to blog_entry_path(@entry.blog_id, @entry.id), notice: 'Comment was successfully created.' }
+        format.html { 
+          redirect_to blog_entry_path(@entry.blog_id, @entry.id), notice: 'Comment was successfully created.' 
+          send_mail @blog, @entry, @comment
+          }
       else
         format.html { redirect_to blog_entry_path(@entry), error: 'Comment was not successfully created.'  }
       end
     end
   end
 
+  def send_mail(blog, entry, comment)
+#     user = User.find(1)
+
+    @mail = NoticeMailer.sendmail_confirm(blog, entry, comment).deliver
+#     render :text => "送信できた！"
+  end
+  
   def approve
     respond_to do |format|
       @comment = Comment.find(params[:id])
