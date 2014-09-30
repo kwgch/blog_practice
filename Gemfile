@@ -53,9 +53,16 @@ group :development, :test do
   gem 'spring-commands-rspec'
 end
 
-gem "better_errors",        group: :development
-
 group :test do
   gem 'factory_girl_rails'
 	gem 'faker'
+  gem "capybara"
+  gem "database_cleaner"
+  gem "launchy"
+end
+
+group :development do
+  gem 'meta_request'
+  gem "better_errors"
+  gem 'rails-footnotes'
 end

@@ -22,7 +22,7 @@ Rails.application.configure do
   
   config.action_mailer.smtp_settings = {
     :user_name => '2351986ae90761010',
-    :password => 'xxx',
+    :password => '86fc5b3d67a3d0',
     :address => 'mailtrap.io',
     :domain => 'mailtrap.io',
     :port => '2525',
@@ -48,4 +48,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  
+  config.consider_all_requests_local = true
 end
+BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']

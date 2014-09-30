@@ -18,7 +18,7 @@ RSpec.describe BlogsController, :type => :controller do
     it "新規作成後に@blogのshowに遷移すること" do
     	@blog = FactoryGirl.attributes_for(:blog)
     	post :create, blog: @blog
-    	response.should redirect_to blog_path(assigns(:blog))
+      expect(response).to redirect_to blog_path(assigns(:blog))
     end
   end
 end
